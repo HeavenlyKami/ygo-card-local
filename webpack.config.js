@@ -7,7 +7,6 @@ const isDev = process.env.NODE_ENV === 'development'
 
 const config = {
   entry: {
-    browser: './source/index.js',
     node: './source/index-node.js',
   },
   output: {

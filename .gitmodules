@@ -1,3 +1,0 @@
-[submodule "ygo-database"]
-	path = ygo-database
-	url = https://github.com/mycard/ygopro-database.git
