@@ -28,22 +28,6 @@ const config = {
       patterns: [
         {
           from: __dirname + '/source/mold',
-          to: __dirname + '/packages/browser/dist/mold'
-        },
-        {
-          from: __dirname + '/source/config',
-          to: __dirname + '/packages/browser/dist/config'
-        },
-        {
-          from: __dirname + '/source/types',
-          to: __dirname + '/packages/browser/dist/types'
-        },
-      ]
-    }),
-    new CopyWebpackPlugin({
-      patterns: [
-        {
-          from: __dirname + '/source/mold',
           to: __dirname + '/packages/node/dist/mold'
         },
         {
