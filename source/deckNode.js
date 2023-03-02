@@ -13,9 +13,8 @@ export const renderDeckPDF = async (cards) => {
       await ctx.addPage();
     }
     const card = cards[i];
-    const cardCanvas = await card.render();
     const x = (i % PER_PAGE) % PER_ROW, y = Math.floor((i % PER_PAGE) / PER_ROW);
-    ctx.drawImage(cardCanvas, INIT_X + x * (CARD_W + 1), INIT_Y + y * (CARD_H + 1), CARD_W, CARD_H);
+    ctx.drawImage(card, INIT_X + x * (CARD_W + 1), INIT_Y + y * (CARD_H + 1), CARD_W, CARD_H);
   }
   
   return pdfCanvas;
