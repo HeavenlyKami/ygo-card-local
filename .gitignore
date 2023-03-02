@@ -1,4 +1,4 @@
 node_modules/
-demo/
-input.txt
+demo/*
+main/input.txt
 .DS_Store

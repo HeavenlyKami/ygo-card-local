@@ -1,10 +1,10 @@
-const { Card,getData } = require('../packages/node/dist/index.js');
+const { Card, getData } = require('../packages/node/dist/index.js');
 const fs = require('fs');
 
 const DEFAULT_IMAGE_BASE = 'https://gitee.com/ymssx/pics/raw/master/500';
 const OUTPUT_PATH = './demo';
 const MOLD_PATH = './packages/node/dist/mold';
-const INPUT_PATH = './input.txt';
+const INPUT_PATH = './main/input.txt';
 // sqlite3 YgoText.db < ygo-database/locales/zh-CN/cards.cdb.sql
 const DB_PATH = './YgoText.db';
 const lang = 'cn';
@@ -15,7 +15,7 @@ async function renderCanvasToImageFile(canvas, file) {
         const stream = canvas.createJPEGStream();
         stream.pipe(out);
         out.on('finish', () => {console.log(`${file} was created`);resolve();});
-        out.on('error', () => {console.log(`fail to create ${file}`, error);reject(error);});
+        out.on('error', (error) => {console.log(`fail to create ${file}`, error);reject(error);});
     });
 }
 

@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const env = process.env.NODE_ENV
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -56,12 +55,7 @@ const config = {
           to: __dirname + '/packages/node/dist/types'
         },
       ]
-    }),
-    // new HtmlWebpackPlugin({
-    //   filename: 'dev.html',
-    //   template: 'dev.html',
-    //   inject: true
-    // })
+    })
   ]
 }
 
