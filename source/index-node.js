@@ -5,4 +5,4 @@ export { readYDK, getIdSetFromYDK } from './lib/readYDK';
 export { variation, transType } from './lib/variation';
 export { translate } from './lib/translate';
 export { queryData, queryDataList, getData, getMultiData } from './lib/readDB';
-export { renderDeckPDF } from './deckNode';
+export { renderDeckPDF, renderDeckBackPDF } from './deckNode';

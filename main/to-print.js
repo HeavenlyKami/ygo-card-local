@@ -1,9 +1,8 @@
-const { renderDeckPDF } = require('../packages/node/dist/index.js');
+const { renderDeckPDF, renderDeckBackPDF } = require('../packages/node/dist/index.js');
 const fs = require('fs');
-const { loadImage, createCanvas } = require('canvas')
+const { loadImage } = require('canvas')
 
 const OUTPUT_PATH = './output';
-const MOLD_PATH = './packages/node/dist/mold';
 const INPUT_PATH = './main/input.txt';
 
 function getCardCodes() {
@@ -29,19 +28,25 @@ function makePrintFile(images) {
     const out = fs.createWriteStream(OUTPUT_PATH + "/output.pdf");
     pdf.then(canva => {
         canva.createPDFStream().pipe(out);
-        out.on('finish', () => console.log(`The pdf file was created`));
-        out.on('error', (error) => {console.log(`fail to create ${file} (${name})`, error);reject(error);})
+        out.on('finish', () => console.log(`The pdf file of deck was created`));
+        out.on('error', (error) => {console.log(`fail to create pdf file`, error);reject(error);})
     });
-
+    const pdf2 = renderDeckBackPDF();
+    const out2 = fs.createWriteStream(OUTPUT_PATH + "/cardback.pdf");
+    pdf2.then(canva => {
+        canva.createPDFStream().pipe(out2);
+        out2.on('finish', () => console.log(`The pdf file of deck back was created`));
+        out2.on('error', (error) => {console.log(`fail to create pdf file`, error);reject(error);})
+    });
 }
 
 function loadCardImages(files){
     const imageList = files.map(file => 
         loadImage(file)
     );
-    Promise.all(imageList).then(images => {
-        console.log(images);
-        makePrintFile(images)});
+    Promise.all(imageList).then(images => { makePrintFile(images); });
 }
 
-loadCardImages(getCardCodes());
+const cards = getCardCodes();
+loadCardImages(cards, true);  // frame spill effect
+
