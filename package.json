@@ -7,8 +7,8 @@
   },
   "scripts": {
     "build": "webpack",
-    "test": "node ./test/render-test.js",
-    "run": "node ./main/render-test.js"
+    "render": "node ./main/render.js",
+    "print": "node ./main/to-print.js"
   },
   "author": "Yami",
   "license": "ISC",

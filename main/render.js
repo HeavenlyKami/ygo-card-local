@@ -20,7 +20,7 @@ async function renderCanvasToImageFile(canvas, file) {
 }
 
 const inputSet = new Set();
-const codes = fs.readFileSync(INPUT_PATH)
+fs.readFileSync(INPUT_PATH)
     .toString('utf-8')
     .split("\n")
     .map(code => code.trim())
@@ -35,13 +35,10 @@ inputSet.forEach(code => {
 Promise.all(cardInfo)
     .then(values => {
         console.log("Card Info fetched successfully")
-        renderTest(values)
+        renderCards(values)
     })
 
-// const re = getData(DB_PATH, "1861629")
-// re.then(x => console.log(x))
-
-async function renderTest(values) {
+async function renderCards(values) {
     values
         .map(data => new Card({
             data: Card.transData(data),
@@ -54,5 +51,3 @@ async function renderTest(values) {
             renderCanvasToImageFile(canvas, `${OUTPUT_PATH}/${card.data.name}.jpg`);
         })
 }
-
-// renderTest();
