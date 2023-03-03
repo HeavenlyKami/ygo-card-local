@@ -1,8 +1,5 @@
 const path = require('path');
-const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const env = process.env.NODE_ENV
-const isDev = process.env.NODE_ENV === 'development'
 
 const config = {
   entry: {
@@ -43,25 +40,4 @@ const config = {
   ]
 }
 
-
-if (isDev) {
-  config.devServer = {
-    port: 8080,
-    host: 'localhost',
-    overlay: {
-      errors: true
-    },
-    open: true,
-    hot: true
-  }
-// 添加热更新模块
-  config.plugins.push(
-    new webpack.DefinePlugin({
-      'process.evn': '"development"'  //添加全局变量
-    }),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
-  )
-  config.devtool = '#cheap-module-eval-source-map'
-}
 module.exports = config
