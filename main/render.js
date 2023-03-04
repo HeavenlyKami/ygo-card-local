@@ -1,8 +1,9 @@
 const { Card, getData, createFolder } = require('../packages/node/dist/index.js');
 const fs = require('fs');
-
-const DEFAULT_IMAGE_BASE = 'https://gitee.com/ymssx/pics/raw/master/500';
-// https://images.ygoprodeck.com/images/cards_cropped;
+const https = require('https');
+const USER_IMAGE_BASE = './main/imgLibrary';
+const YMSSX_IMAGE_BASE = 'https://gitee.com/ymssx/pics/raw/master/500';
+const YGO_PRO_BASE = 'https://images.ygoprodeck.com/images/cards_cropped';
 const OUTPUT_PATH = './main/output';
 const MOLD_PATH = './packages/node/dist/mold';
 const INPUT_PATH = './main/input.txt';
@@ -32,17 +33,44 @@ function getCardCodes() {
     return inputSet
 }
 
+async function httpGet(url) {
+    return new Promise((resolve) => {
+        https.get(url, res => {
+            resolve(res.statusCode)
+        }) 
+    })
+}
+
+async function selectPicPath(id, name) {
+    const res0 = fs.existsSync(`${USER_IMAGE_BASE}/${id}.jpg`);
+    if (res0) {
+        console.log(`Get card image of ${name} from USER image base`);
+        return `${USER_IMAGE_BASE}/${id}.jpg`;
+    }
+    const res1 = await httpGet(`${YMSSX_IMAGE_BASE}/${id}.jpg`)
+    if (res1 === 200) {
+        console.log(`Get card image of ${name} from YMSSX image base`);
+        return `${YMSSX_IMAGE_BASE}/${id}.jpg`;
+    }
+    const res2 = await httpGet(`${YGO_PRO_BASE}/${id}.jpg`)
+    if (res2 === 200) {
+        console.log(`Get card image of ${name} from YGOPRO image base`);
+        return `${YGO_PRO_BASE}/${id}.jpg`;
+    }
+}
+
 async function renderCards(values) {
     values
-        .map(data => new Card({
-            data: Card.transData(data),
-            lang: lang,
-            moldPath: `${MOLD_PATH}/`, 
-            picPath: `${DEFAULT_IMAGE_BASE}/${data.id}.jpg`
-        }))
-        .map(async card => {
+        .map(async data => {
+            const card = new Card({
+                data: Card.transData(data),
+                lang: lang,
+                moldPath: `${MOLD_PATH}/`, 
+                picPath: await selectPicPath(data.id, data.name)
+            })
             const canvas = await card.render();
             renderCanvasToImageFile(canvas, `${OUTPUT_PATH}/${card.data._id}.jpg`, card.data.name);
+            
         })
 }
 
