@@ -42,10 +42,15 @@ async function httpGet(url) {
 }
 
 async function selectPicPath(id, name) {
-    const res0 = fs.existsSync(`${USER_IMAGE_BASE}/${id}.jpg`);
-    if (res0) {
+    const existJpg = fs.existsSync(`${USER_IMAGE_BASE}/${id}.jpg`);
+    if (existJpg) {
         console.log(`Get card image of ${name} from USER image base`);
         return `${USER_IMAGE_BASE}/${id}.jpg`;
+    }
+    const existPng = fs.existsSync(`${USER_IMAGE_BASE}/${id}.png`);
+    if (existPng) {
+        console.log(`Get card image of ${name} from USER image base`);
+        return `${USER_IMAGE_BASE}/${id}.png`;
     }
     const res1 = await httpGet(`${YMSSX_IMAGE_BASE}/${id}.jpg`)
     if (res1 === 200) {
@@ -57,6 +62,8 @@ async function selectPicPath(id, name) {
         console.log(`Get card image of ${name} from YGOPRO image base`);
         return `${YGO_PRO_BASE}/${id}.jpg`;
     }
+    console.log(`Failed to get card image of ${name}`);
+    return `${YGO_PRO_BASE}/${id}.jpg`;
 }
 
 async function renderCards(values) {
