@@ -1,8 +1,6 @@
 node_modules/
-main/output/*.jpg
-!main/output/.gitkeep
+main/output/*
 main/imgLibrary/*
-!main/imgLibrary/.gitkeep
 main/input.txt
 .DS_Store
 .idea
