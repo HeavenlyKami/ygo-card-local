@@ -1,6 +1,5 @@
 node_modules/
 main/output/*
 main/imgLibrary/*
-main/input.txt
 .DS_Store
 .idea
