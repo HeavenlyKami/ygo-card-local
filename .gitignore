@@ -2,3 +2,4 @@ node_modules/
 output/*
 main/input.txt
 .DS_Store
+.idea
