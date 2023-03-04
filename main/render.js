@@ -1,9 +1,9 @@
-const { Card, getData } = require('../packages/node/dist/index.js');
+const { Card, getData, createFolder } = require('../packages/node/dist/index.js');
 const fs = require('fs');
 
 const DEFAULT_IMAGE_BASE = 'https://gitee.com/ymssx/pics/raw/master/500';
 // https://images.ygoprodeck.com/images/cards_cropped;
-const OUTPUT_PATH = './output';
+const OUTPUT_PATH = './main/output';
 const MOLD_PATH = './packages/node/dist/mold';
 const INPUT_PATH = './main/input.txt';
 // sqlite3 YgoText.db < ygo-database/locales/zh-CN/cards.cdb.sql
@@ -46,6 +46,7 @@ async function renderCards(values) {
         })
 }
 
+createFolder();
 const cardInfo = [];
 getCardCodes().forEach(code => {
     cardInfo.push(getData(DB_PATH, code))

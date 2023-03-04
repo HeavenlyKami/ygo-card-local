@@ -1,8 +1,8 @@
-const { renderDeckPDF, renderDeckBackJPG, renderDeckJPG } = require('../packages/node/dist/index.js');
+const { renderDeckPDF, renderDeckBackJPG, renderDeckJPG, createFolder } = require('../packages/node/dist/index.js');
 const fs = require('fs');
 const { loadImage } = require('canvas')
 
-const OUTPUT_PATH = './output';
+const OUTPUT_PATH = './main/output';
 const INPUT_PATH = './main/input.txt';
 const OUTPUT_FORMAT = 'jpg'; // pdf or jpg
 const SPILL = true; 
@@ -72,6 +72,7 @@ function loadCardImages(files, format = "jpg", SPILL = true){
     });
 }
 
+createFolder();
 const cards = getCardCodes();
 loadCardImages(cards, OUTPUT_FORMAT, SPILL);  // frame spill effect
 makePrintCardBack();
