@@ -12,7 +12,7 @@ function getCardCodes() {
     fs.readFileSync(INPUT_PATH)
         .toString('utf-8')
         .split("\n")
-        .map(code => code.trim())
+        .map(code => code.trim().replace(/^0+/, ''))
         .forEach( code => { 
             if (code.match(/^[0-9]+$/) != null) {
                 if (fs.existsSync(OUTPUT_PATH + '/' + code + '.jpg')) {

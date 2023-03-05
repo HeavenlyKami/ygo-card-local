@@ -35,7 +35,7 @@ function getCardCodes() {
 
 async function httpGet(url) {
     return new Promise((resolve) => {
-        https.get(url, res => {
+        https.get(url, {timeout: 3000}, res => {
             resolve(res.statusCode)
         }) 
     })
