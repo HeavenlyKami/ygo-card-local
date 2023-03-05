@@ -49,8 +49,8 @@ export const renderDeckJPG = async (cards, spill = true) => {
     const ctx = jpgCanvas.getContext('2d');
     ctx.fillStyle = 'rgba(255,255,255,1)';
     ctx.fillRect(0, 0, A4_W, A4_H);
-    const cardsInThisPage = ((j + 1) * PER_PAGE <= cards.length) ? PER_PAGE :  cards.length - j * PER_PAGE;
-    for (let i = 0; i < cardsInThisPage; i++) {
+    const cardsInThisPage = ((j + 1) * PER_PAGE <= cards.length) ? PER_PAGE :  cards.length - j * PER_PAGE
+    for (let i = 0; i < cards.length; i++) {
       const card = cards[j * PER_PAGE + i];
       const x = (i % PER_PAGE) % PER_ROW, y = Math.floor((i % PER_PAGE) / PER_ROW);
       if (spill) {
