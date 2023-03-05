@@ -1,6 +1,8 @@
 const { renderDeckPDF, renderDeckBackJPG, renderDeckJPG, createFolder } = require('../packages/node/dist/index.js');
 const fs = require('fs');
-const { loadImage } = require('canvas')
+const piexif = require("piexifjs");
+const sharp = require('sharp');
+const { loadImage } = require('canvas');
 
 const OUTPUT_PATH = './main/output';
 const INPUT_PATH = './main/input.txt';
@@ -35,6 +37,13 @@ function makePrintPDF(images, spill) {
     });
 }
 
+function changeJPGDPI(path) {
+    sharp(path)
+        .withMetadata({ density: 300 })
+        .toBuffer()
+        .then(data => fs.writeFileSync(path, data))
+}
+
 function makePrintCardBack() {
     const jpg = renderDeckBackJPG();
     const out = fs.createWriteStream(OUTPUT_PATH + "/cardback.jpg");
@@ -51,7 +60,13 @@ function makePrintJPG(images, spill) {
         for (const [index, image] of canvasList.entries()) {
             const out = fs.createWriteStream(`${OUTPUT_PATH}/page${index + 1}.jpg`);
             image.createJPEGStream().pipe(out);
-            out.on('finish', () => console.log(`Page ${index + 1} of deck was created`));
+            out.on('finish', async () => {
+                await sharp(`${OUTPUT_PATH}/page${index + 1}.jpg`)
+                    .withMetadata({ density: 300 })
+                    .toBuffer()
+                    .then(data => fs.writeFileSync(`${OUTPUT_PATH}/page${index + 1}.jpg`, data))
+                console.log(`Page ${index + 1} of deck was created`);
+            });
             out.on('error', (error) => {console.log(`fail to create page ${index + 1}`, error);reject(error);})   
         }
     })
