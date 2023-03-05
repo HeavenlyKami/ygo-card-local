@@ -1,6 +1,5 @@
 const { renderDeckPDF, renderDeckBackJPG, renderDeckJPG, createFolder } = require('../packages/node/dist/index.js');
 const fs = require('fs');
-const piexif = require("piexifjs");
 const sharp = require('sharp');
 const { loadImage } = require('canvas');
 
