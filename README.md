@@ -43,3 +43,12 @@ sqlite3(可选)：此repo内包含了一个YGOPRO的卡片数据库。但如果�
 TODO：添加更改卡名颜色的设置，以打印闪卡
 TODO：添加打印英文版卡片的途径 
 TODO：添加打印Token卡片的功能(目前无法打印Token)
+
+
+
+更新YGO卡片数据库的方法：
+1.在其它地方clone这个repo https://github.com/mycard/ygopro-database
+2.进入此repo并git branch dump
+3.安装sqlite3，然后运行 sqlite3 YgoText.db < locales/zh-CN/cards.cdb.sql
+    这个指令会运行设置好的sql命令，生成一个db文件
+4.将这个文件拷贝到本repo的根目录下，替换已有的YgoText.db文件

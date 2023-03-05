@@ -7,7 +7,6 @@ const YGO_PRO_BASE = 'https://images.ygoprodeck.com/images/cards_cropped';
 const OUTPUT_PATH = './main/output';
 const MOLD_PATH = './packages/node/dist/mold';
 const INPUT_PATH = './main/input.txt';
-// sqlite3 YgoText.db < ygo-database/locales/zh-CN/cards.cdb.sql
 const DB_PATH = './YgoText.db';
 const lang = 'cn';
 
