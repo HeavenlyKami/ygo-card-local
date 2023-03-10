@@ -40,7 +40,7 @@ function makePrintCardBack() {
     const jpg = renderDeckBackJPG();
     const out = fs.createWriteStream(OUTPUT_PATH + "/cardback.jpg");
     jpg.then(canva => {
-        canva.createJPEGStream().pipe(out);
+        canva.createJPEGStream({quality: 1}).pipe(out);
         out.on('finish', () => console.log(`The jpg file of deck back was created`));
         out.on('error', (error) => {console.log(`fail to create pdf file`, error);reject(error);})
     });
@@ -51,7 +51,7 @@ function makePrintJPG(images, spill) {
     jpgs.then(canvasList => {
         for (const [index, image] of canvasList.entries()) {
             const out = fs.createWriteStream(`${OUTPUT_PATH}/page${index + 1}.jpg`);
-            image.createJPEGStream().pipe(out);
+            image.createJPEGStream({quality: 1}).pipe(out);
             out.on('finish', async () => {
                 await sharp(`${OUTPUT_PATH}/page${index + 1}.jpg`)
                     .withMetadata({ density: 350 })

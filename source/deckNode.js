@@ -71,6 +71,7 @@ export const renderDeckBackJPG = async () => {
   const largeBack = await loadImg(CARD_BACK_PATH);
   const jpgCanvas = createCanvas(A4_W, A4_H);
   const ctx = jpgCanvas.getContext('2d');
+  ctx.imageSmoothingEnabled = false;
   ctx.fillStyle = 'rgba(255,255,255,1)';
   ctx.fillRect(0, 0, A4_W, A4_H);
   for (let i = 1; i <= PER_PAGE; i++) {

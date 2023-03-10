@@ -208,6 +208,7 @@ export default class CardDrawer {
     this.admin.canvas.height = size[1];
     const r = size[0] / config.moldSize[0];
     const c = this.canvas;
+    c.imageSmoothingEnabled = false;
 
     let fontPlus = "";
     if (this.admin.fastFont) {

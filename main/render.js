@@ -13,7 +13,7 @@ const lang = 'cn';
 async function renderCanvasToImageFile(canvas, file, name) {
     return new Promise((resolve ,reject) => {
         const out = fs.createWriteStream(file);
-        const stream = canvas.createJPEGStream();
+        const stream = canvas.createJPEGStream({quality: 1});
         stream.pipe(out);
         out.on('finish', () => {console.log(`${file} was created (${name})`);resolve();});
         out.on('error', (error) => {console.log(`fail to create ${file} (${name})`, error);reject(error);});
