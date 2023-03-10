@@ -41,8 +41,14 @@ function makePrintCardBack() {
     const out = fs.createWriteStream(OUTPUT_PATH + "/cardback.jpg");
     jpg.then(canva => {
         canva.createJPEGStream({quality: 1}).pipe(out);
-        out.on('finish', () => console.log(`The jpg file of deck back was created`));
-        out.on('error', (error) => {console.log(`fail to create pdf file`, error);reject(error);})
+        out.on('finish', async () => {
+            await sharp(`${OUTPUT_PATH}/cardback.jpg`)
+                .withMetadata({ density: 350 })
+                .toBuffer()
+                .then(data => fs.writeFileSync(`${OUTPUT_PATH}/cardback.jpg`, data))
+            console.log(`The jpg file of deck back was created`);
+        });
+        out.on('error', (error) => {console.log(`fail to create deck back file`, error);reject(error);})
     });
 }
 
