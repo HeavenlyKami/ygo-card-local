@@ -3,7 +3,7 @@ const FRAME_PATH = './packages/node/dist/mold/frame/spill_frame.jpg';
 const CARD_BACK_PATH = './packages/node/dist/mold/frame/spill_card_back.jpg';
 
 const PER_ROW = 3, PER_PAGE = 9;
-const RATIO = 25.4, DPI = 300;
+const RATIO = 25.4, DPI = 350;
 
 const A4_W_MM = 210, A4_H_MM = 297;
 const CARD_W_MM = 59, CARD_H_MM = 86;
@@ -12,9 +12,8 @@ const MARGIN_MM = 7;
 
 const pixel = (int) => Math.round(int * DPI/RATIO);
 const loadImg = async (path) => await loadImage(path);
-
-const A4_W = pixel(A4_W_MM), A4_H = pixel(A4_H_MM);  // 2480*3508
-const CARD_W = pixel(CARD_W_MM), CARD_H = pixel(CARD_H_MM);  // 697*1016
+const A4_W = pixel(A4_W_MM), A4_H = pixel(A4_H_MM);  // 2894*4093
+const CARD_W = pixel(CARD_W_MM), CARD_H = pixel(CARD_H_MM);  // 813*1185
 const CARD_W_L = pixel(CARD_W_L_MM), CARD_H_L = pixel(CARD_H_L_MM);
 const MARGIN = pixel(MARGIN_MM);
 
@@ -47,10 +46,11 @@ export const renderDeckJPG = async (cards, spill = true) => {
   for (let j = 0; j < pageNumber; j++) {
     const jpgCanvas = createCanvas(A4_W, A4_H);
     const ctx = jpgCanvas.getContext('2d');
+    ctx.imageSmoothingEnabled = false;
     ctx.fillStyle = 'rgba(255,255,255,1)';
     ctx.fillRect(0, 0, A4_W, A4_H);
-    const cardsInThisPage = ((j + 1) * PER_PAGE <= cards.length) ? PER_PAGE :  cards.length - j * PER_PAGE
-    for (let i = 0; i < cards.length; i++) {
+    const cardsInThisPage = ((j + 1) * PER_PAGE <= cards.length) ? PER_PAGE :  cards.length - j * PER_PAGE;
+    for (let i = 0; i < cardsInThisPage; i++) {
       const card = cards[j * PER_PAGE + i];
       const x = (i % PER_PAGE) % PER_ROW, y = Math.floor((i % PER_PAGE) / PER_ROW);
       if (spill) {
@@ -62,7 +62,7 @@ export const renderDeckJPG = async (cards, spill = true) => {
                           MARGIN * (y + 1) + y * CARD_H + (CARD_H_L - CARD_H)/2, 
                           CARD_W, CARD_H);
     }
-    pages.push(jpgCanvas)
+    pages.push(jpgCanvas);
   }
   return pages;
 };

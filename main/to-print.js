@@ -36,19 +36,12 @@ function makePrintPDF(images, spill) {
     });
 }
 
-function changeJPGDPI(path) {
-    sharp(path)
-        .withMetadata({ density: 300 })
-        .toBuffer()
-        .then(data => fs.writeFileSync(path, data))
-}
-
 function makePrintCardBack() {
     const jpg = renderDeckBackJPG();
     const out = fs.createWriteStream(OUTPUT_PATH + "/cardback.jpg");
     jpg.then(canva => {
         canva.createJPEGStream().pipe(out);
-        out.on('finish', () => console.log(`The pdf file of deck back was created`));
+        out.on('finish', () => console.log(`The jpg file of deck back was created`));
         out.on('error', (error) => {console.log(`fail to create pdf file`, error);reject(error);})
     });
 }
@@ -61,7 +54,7 @@ function makePrintJPG(images, spill) {
             image.createJPEGStream().pipe(out);
             out.on('finish', async () => {
                 await sharp(`${OUTPUT_PATH}/page${index + 1}.jpg`)
-                    .withMetadata({ density: 300 })
+                    .withMetadata({ density: 350 })
                     .toBuffer()
                     .then(data => fs.writeFileSync(`${OUTPUT_PATH}/page${index + 1}.jpg`, data))
                 console.log(`Page ${index + 1} of deck was created`);
