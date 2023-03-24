@@ -17,7 +17,7 @@
 
 #### 使用环境：
 
-操作系统：我个人使用的是linux，mac应该也可。windows环境下有可能出现字体无法正确加载的问题。
+操作系统：我个人使用的是linux，mac应该也可。windows环境下有可能出现字体无法正确加载的问题
 
 // TODO：解决windows平台下canvas无法正确loadFont的问题
 
@@ -27,11 +27,13 @@ sqlite3(可选)：此repo内包含了一个YGOPRO的卡片数据库。但如果�
 
 #### 使用方法：
 
-1. 运行npm install 安装依赖
-2. (可选) 如果用户更改了source文件夹下的代码，运行npm run-script build重新打包
-3. 在main/input.txt文件内填入需要打印的卡片编号，每行限一个
+1. 运行`npm install` 安装依赖
+    If you are Mac user and cannot install canvas successfully, please try to run `arch -arm64 brew install pkg-config cairo pango libpng jpeg giflib librsvg` before install (it works for me!)
+    Reference to this method: https://github.com/Automattic/node-canvas/issues/1733#issuecomment-808916786
+2. (可选) 如果用户更改了source文件夹下的代码，运行`npm run-script build`重新打包
+3. 在 main/input.txt 文件内填入需要打印的卡片编号，每行限一个
     （会自动舍弃非数字串的行，可以直接复制YDK进来）
-4. 运行npm run-script render，会在main/output文件夹下，生成每张卡的图片。
+4. 运行`npm run-script render`，会在 main/output 文件夹下，生成每张卡的图片
 
     卡面图像的选择次序为 用户自已找到的卡面 -> YMSSX的卡图库 -> YGOPRO的卡图库。卡面的选择会显示在log中
 
@@ -49,14 +51,14 @@ sqlite3(可选)：此repo内包含了一个YGOPRO的卡片数据库。但如果�
     这时，请将自己找到的卡面放入main/imgLibrary下面，格式为[卡片编号].jpg或[卡片编号].png
 
     注意，如果卡片编号以'0'为开头，请将'0'去除
-5. 检查main/output下生成的图片。如果发生了字体加载失败、找不到卡片信息/卡图等错误，可以在log中找到线索。
-6. 运行npm run-script print，会读取main/output文件夹下的卡片卡图，合成为用来直接打印的A4尺寸图像。
+5. 检查main/output下生成的图片。如果发生了字体加载失败、找不到卡片信息/卡图等错误，可以在log中找到线索
+6. 运行npm run-script print，会读取main/output文件夹下的卡片卡图，合成为用来直接打印的A4尺寸图像
 
-    如果用户想替换某张卡片的整张卡的图像，也可以在这一步之前用自己的图片替换main/output下的对应图。
+    如果用户想替换某张卡片的整张卡的图像，也可以在这一步之前用自己的图片替换main/output下的对应图
 
     可以在to-print.js内开关出血效果(默认为开)，与调整输出格式到pdf(默认为jpg)
 7. 输出的图片同样位于main/output下，包括卡背的图像
-8. 目前只打印中文卡。若想打印日文卡，可以从 https://ygobbs.com/t/游戏王高清日语卡图/143511 下载卡图放到main/output下，并用print指令打印。
+8. 目前只打印中文卡。若想打印日文卡，可以从 https://ygobbs.com/t/游戏王高清日语卡图/143511 下载卡图放到main/output下，并用print指令打印
 
 
 TODO：添加更改卡名颜色的设置，以打印闪卡
